@@ -74,8 +74,9 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
       <div class="top">
-        <img src="{{asset('userSide/img/kode-icon.png')}}" alt="icon" class="icon">
-        <h1>Kode</h1>
+
+        <img src="{{asset('img').'/'.\App\Setting::first()->logo}}" alt="icon" class="icon">
+        <h1>{{\App\Setting::first()->site_name}}</h1>
         <h4>Login to get access</h4>
       </div>
       <div class="form-area">

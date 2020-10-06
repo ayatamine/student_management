@@ -52,6 +52,21 @@
             </div>
             <!-- Message End -->
           </a>
+          <a href="javascript:void()" data-toggle="modal" data-target="#updateAccount"
+           class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  تعديل حسابي
+                  <span class="float-left text-sm text-danger">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                  </span>
+                </h3>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
 
         </div>
       </li>
@@ -88,3 +103,43 @@
       </li> --}}
     </ul>
   </nav>
+<div class="modal fade" id="updateAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content mt-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <form role="form" id="addbf"  method="POST" action="{{route('admin.updateAccount')}}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="card-body pb-0">
+                        <div class="form-group">
+                        <label for="name">الاسم</label>
+                        <input type="text"  name="name"  class="form-control" id="name" value="{{auth('admin')->user()->name}}">
+                        </div>
+                        <div class="form-group">
+                        <label for="file_number">البريد الالكتروني</label>
+                        <input type="email"  name="email"  class="form-control" id="email" value="{{auth('admin')->user()->email}}">
+                        </div>
+                        <div class="form-group">
+                        <label for="password">كلمة السر الجديدة</label>
+                        <input type="password"  name="password"  class="form-control" id="password">
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer pt-0">
+                    <button type="submit" class="btn btn-primary mr-3">حفظ</button>
+                </div>
+                </form>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+</div>

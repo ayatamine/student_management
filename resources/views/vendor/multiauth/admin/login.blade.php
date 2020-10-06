@@ -41,7 +41,8 @@
                         <div class="form-group row">
                             <div class="col-md-8 col-md-offset-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                    <input class="form-check-input" type="checkbox" style="    left: -0.4rem;
+                                    top: -0.3rem;" name="remember" id="remember"
                                         {{ old( 'remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">

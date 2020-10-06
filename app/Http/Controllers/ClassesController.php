@@ -98,7 +98,7 @@ class ClassesController extends Controller
          ]);
          $class->matieres()->attach($matiere->id);
          //add marks of this matiere to all students of this class
-         $this->addMarksToAllStudent($class,$matiere_id);
+         $this->addMarksToAllStudent($class,$matiere->id);
          Session::flash('success','تم إضافة المادة بنجاح');
          return back();
     }

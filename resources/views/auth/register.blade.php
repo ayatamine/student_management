@@ -126,7 +126,7 @@
       </div>
     </form>
     <div class="footer-links row">
-      <div class="col-xs-6"><a  href="{{ route('register') }}"><i class="fa fa-sign-in"></i> Login</a></div>
+      <div class="col-xs-6"><a  href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></div>
       <div class="col-xs-6 text-right">
         @if (Route::has('password.request'))
         <a href="{{ route('password.request') }}"><i class="fa fa-lock"></i> Forgot password</a>

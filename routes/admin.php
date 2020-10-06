@@ -55,6 +55,7 @@ Route::group([
 
   //Route::get('/','AdminController@index')->name('admin.index');
   Route::post('/updateSiteSettings','AdminSingleController@updateSiteSettings')->name('updateSiteSettings');
+  Route::post('/updateAccount','AdminSingleController@updateAccount')->name('admin.updateAccount');
   //classes
   Route::resource('/classes','ClassesController');
   Route::post('/attachMatiere','ClassesController@attachMatiere')->name('classes.attachmatiere');

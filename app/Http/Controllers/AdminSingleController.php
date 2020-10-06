@@ -8,6 +8,7 @@ use App\Setting;
 use App\User;
 use App\Marks;
 use Session;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSingleController extends Controller
 {
@@ -35,6 +36,21 @@ class AdminSingleController extends Controller
          $settings->save();
          Session::flash('success','تم تغيير الإعدادات بنجاح');
          return redirect()->back();
+  }
+  public function updateAccount(Request $request){
+    //dd($request);
+    $this->validate($request,[
+      'name'=>'required',
+      'email'=>'required',
+   ]);
+
+   $admin = auth('admin')->user();
+   $admin->name = $request->name;
+   $admin->email = $request->email;
+   $admin->password = $request->password ? Hash::make($request->password) : $admin->password;
+   $admin->save();
+    Session::flash('success','تم تعديل الحساب بنجاح');
+    return redirect()->back();
   }
   public function students(){
     $settings = Setting::find(1);

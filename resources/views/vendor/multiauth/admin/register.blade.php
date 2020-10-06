@@ -1,4 +1,4 @@
-@extends('multiauth::layouts.app') 
+@extends('multiauth::layouts.app')
 @section('content')
 <div class="container">
     <div class="row">
@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register New {{ ucfirst(config('multiauth.prefix')) }}</div>
                 <div class="panel-body">
-    @include('multiauth::message')
+     @include('multiauth::message')
                     <form method="POST" class="form-horizontal" action="{{ route('admin.register') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

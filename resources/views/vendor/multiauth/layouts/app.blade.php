@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{asset('userSide/css/bootstrap.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -31,7 +32,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ route('admin.home') }}">
-                        {{ config('app.name', 'Laravel') }} {{ ucfirst(config('multiauth.prefix')) }}
+                        {{\App\Setting::first()->site_name}} {{ ucfirst(config('multiauth.prefix')) }}
                     </a>
                 </div>
 
@@ -45,7 +46,6 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                        <li><a href="{{route('admin.login')}}">{{ ucfirst(config('multiauth.prefix')) }} Login</a></li>
                         @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -56,7 +56,7 @@
                                 <li>
                                     @admin('super')
                                     <a href="{{ route('admin.show') }}">{{ ucfirst(config('multiauth.prefix')) }}</a>
-                                    <a href="{{ route('admin.roles') }}">Roles</a> 
+                                    <a href="{{ route('admin.roles') }}">Roles</a>
                                     @endadmin
                                     <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
