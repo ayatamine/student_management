@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Matiere;
 use Session;
+use App\Marks;
 class MatiereController extends Controller
 {
     /**
@@ -82,7 +83,16 @@ class MatiereController extends Controller
     {
         $matiere = Matiere::findorfail($id);
         $matiere->delete();
+        $this->removeMarksToAllStudent($matiere->id);
         Session::flash('success','تم حدف المادة بنجاح');
         return back();
+    }
+    public function removeMarksToAllStudent($matiere_id){
+
+          $marks  = Marks::whereMatiereId($matiere_id)->get();
+          foreach ($marks as $mark) {
+            $mark->delete();
+          }
+
     }
 }

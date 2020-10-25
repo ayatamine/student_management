@@ -83,6 +83,8 @@ class ClassesController extends Controller
 
         $class = Classes::findorfail($class_id);
         $class->matieres()->detach($matiere);
+        //remove marks from student account
+        $this->removeMarksToAllStudent($class,$matiere);
         Session::flash('success','تم إزالة المادة بنجاح');
         return back();
     }
@@ -110,6 +112,15 @@ class ClassesController extends Controller
           $new_marks['mark'] = 0;
           Marks::create($new_marks);
         }
+    }
+    public function removeMarksToAllStudent($class,$matiere_id){
+
+        foreach ($class->students as $student) {
+
+            $mark  = Marks::whereStudentId($student->id)->whereMatiereId($matiere_id)->first();
+            $mark->delete();
+        }
+
     }
     /**
      * Show the form for editing the specified resource.
