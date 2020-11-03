@@ -88,7 +88,9 @@
                                           <p>{{count($class->students)}} طالب</p>
                                         </div>
                                         <div class="icon delete-class">
-                                          <a ><i class="fa fa-trash-o" type="button" data-toggle="modal" data-target="#addb" ></i></a>
+                                          <a  ><i class="fa fa-trash-o delete_class" type="button"  data-toggle="modal"
+                                            data-target="#delete_class"
+                                            delete_link="{{route('classes.destroy',['class'=>$class->id])}}" ></i></a>
                                         </div>
                                         <a href="{{route('classes.show',['class'=>$class->id])}}" class="small-box-footer">زيارة <i class="fa fa-arrow-circle-left"></i></a>
                                       </div>
@@ -147,54 +149,34 @@
                       </div>
               </div>
               {{-- model delete class --}}
-              <div class="modal fade" id="deleteclass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content mt-4">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle"></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                                <form role="form" id="addbf"  method="POST" action="{{route('classes.store')}}" enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    <div class="card-body pb-0">
-                                        <div class="form-group">
-                                        <label for="name">اسم القسم</label>
-                                        <input type="text"  name="name"  class="form-control" id="name" >
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="file_number">رقم الملف</label>
-                                        <input type="text"  name="file_number"  class="form-control" id="file_number">
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="id_number">رقم الهوية</label>
-                                        <input type="text" name="id_number"  class="form-control" id="id_number">
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="phone_number">رقم الجوال</label>
-                                        <input type="number" name="phone_number" minlength="10" maxlength="12"  class="form-control" id="phone_number" placeholder="xxxxxxxxxx">
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="note">ملاحظات</label>
-                                          <textarea name="note" class="w-100" id="note" rows="5"></textarea>
-
-                                        </div>
-
+              <div class="modal fade" id="delete_class" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content mt-4">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                            <form role="form" id="delete_class_form"  method="POST" action="" >
+                                {{ csrf_field() }}
+                                <div class="card-body pb-0">
+                                    <div class="form-group text-center">
+                                      <input type="submit" class="btn btn-danger  mr-1 ml-1"  value="تأكيد الحدف">
+                                        @method('delete')
                                     </div>
-                                </div>
-                                <!-- /.card-body -->
 
-                                <div class="card-footer pt-0">
-                                    <button type="submit" class="btn btn-primary mr-3">إضافة</button>
                                 </div>
-                                </form>
-                        </div>
-                        <div class="modal-footer">
+                              </form>
+                            </div>
+                            <!-- /.card-body -->
 
-                        </div>
-                      </div>
+                            <div class="card-footer pt-2">
+                            </div>
+
+                    </div>
+                  </div>
               </div>
               {{-- model add student --}}
               <div class="modal fade"  id="importxlxs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -263,6 +245,10 @@
 });
  </script>
 <script>
+  $(document).on('click','.delete_class',function(){
+      let delete_link = $(this).attr('delete_link');
+      $('#delete_class_form').attr('action',delete_link);
+    })
   $(function () {
     $("#example1").DataTable({
         "language": {

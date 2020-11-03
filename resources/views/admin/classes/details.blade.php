@@ -75,7 +75,18 @@
           @endphp
           <div class="card-header">
             <h3 class="card-title">
-                  <button type="button" class="btn btn-info float-right mr-1 ml-1" data-toggle="modal" data-target="#add_matiere"><i class="fa fa-plus " style="position:relative;top:3px"></i> إضافة مادة</button>
+                  <button type="button" class="btn btn-primary float-right mr-1 ml-1" data-toggle="modal" data-target="#add_matiere"><i class="fa fa-plus " style="position:relative;top:3px"></i> إضافة مادة</button>
+                  <form action="{{route('matieres.upload')}}" method="post"
+                   enctype="multipart/form-data" id="import_matieres">
+                    @csrf
+                     <label for="file"
+                    class="btn btn-info float-right mr-1 ml-1" >
+                    <i class="fa fa-upload " style="position:relative;top:3px"></i> رفع CSV
+                    </label>
+                    <input type="file" name="file" id="file" class="d-none" onchange="importMatieres()">
+                    <input type="hidden" name="class_id"  class="form-control" value="{{$class_details->id}}">
+                  </form>
+
             </h3>
           </div>
           <div class="card-body">
@@ -231,6 +242,14 @@
                                         <label for="name">اسم المادة</label>
                                         <input type="text" name="matiere" id="matiere" value="{{old('matiere')}}" class="form-control">
                                         <input type="hidden" name="class_id"  class="form-control" value="{{$class_details->id}}">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="cofficient">المعامل (الضارب)</label>
+                                          <input type="number" class="form-control" name="cofficient" id="">
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="total">العدد الجملي</label>
+                                          <input type="number" class="form-control" name="total" id="">
                                         </div>
 
                                     </div>
@@ -434,6 +453,9 @@
 
     });
  */
+ function importMatieres(){
+  document.getElementById('import_matieres').submit();
+ }
 </script>
 @endsection
 @endsection

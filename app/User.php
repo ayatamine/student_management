@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','s_id','class_id','absence_number'
+        'name', 'email', 'password','s_id','class_id','absence_number','state'
     ];
 
     /**
@@ -44,6 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function marks(){
         return $this->hasMany(Marks::class,'student_id');
+    }
+    public function marksAverage(){
+      $tot =0;$cofficient_sum = 0;
+       foreach ($this->marks as $mark) {
+           $cofficient_sum += $mark->matiere->cofficient;
+           $tot += $mark->matiere->cofficient * $mark->mark;
+
+       }
+       return array('cofficient_sum'=>$cofficient_sum,'result'=>round($tot / $cofficient_sum,2)) ;
     }
 
 }

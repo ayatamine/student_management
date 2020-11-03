@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Classes;
-use App\Setting;
 use App\Matiere;
 use App\Marks;
 use Session;
@@ -17,9 +16,9 @@ class ClassesController extends Controller
      */
     public function index()
     {
-         $settings = Setting::find(1);
+
          $classes = Classes::latest()->get();
-         return view('admin.classes.index',compact('classes','settings'));
+         return view('admin.classes.index',compact('classes'));
     }
 
     /**
@@ -58,10 +57,10 @@ class ClassesController extends Controller
      */
     public function show($id)
     {
-            $settings = Setting::find(1);
+            //
             $class_details = Classes::with('students')->with('matieres')->findorfail($id);
             $matieres = Matiere::whereNotIn('id',$class_details->matieres->pluck('id'))->get();
-            return view('admin.classes.details',compact('settings','class_details','matieres'));
+            return view('admin.classes.details',compact('class_details','matieres'));
 
     }
     //attach an existing matiere to the class
@@ -92,11 +91,13 @@ class ClassesController extends Controller
     public function createAddMatiere(Request $request){
          $this->validate($request,[
              'matiere'=>'string|required',
-             'class_id'=>'required'
+             'class_id'=>'required',
          ]);
          $class = Classes::findorfail($request->class_id);
          $matiere = Matiere::create([
-             'name'=>$request->matiere
+             'name'=>$request->matiere,
+             'cofficient'=>$request->cofficient,
+             'total'=>$request->total,
          ]);
          $class->matieres()->attach($matiere->id);
          //add marks of this matiere to all students of this class
@@ -122,6 +123,7 @@ class ClassesController extends Controller
         }
 
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -153,6 +155,13 @@ class ClassesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $class = Classes::findorfail($id);
+
+        $class->matieres()->detach($class->matieres->pluck('id'));
+        $class->delete();
+        //dd($class->matieres);
+        Session::flash('success','تم حدف القسم بنجاح');
+        return back();
+
     }
 }

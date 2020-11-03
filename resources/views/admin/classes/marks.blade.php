@@ -62,7 +62,7 @@
             <h3 class="card-title col-md-4 col-6 mb-2"> <span class="text-muted">عدد المواد : </span><span class="text-primary">{{count($student->class->matieres)}}</span></h3>
           </div>
         </div>
-        <div class="card">
+        <div class="card" id="marks">
                 <div class="card-header bg-info">
                   <h3 class="card-title"> <strong >قائمة العلامات لكل مادة</strong></h3>
                 </div>
@@ -83,25 +83,47 @@
                                   <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                       <tr>
-                                        <th class="bg-primary"><strong>المادة</strong></th>
+                                        <th class="bg-success"><strong>المادة</strong></th>
                                         @foreach ($student->marks as $mark)
                                             <th>{{$mark->matiere->name}}</th>
                                         @endforeach
-                                        <th>اجراء</th>
                                       </tr>
                                       </thead>
                                       <tbody>
-                                      <tr>
-                                        <td class="bg-info"><strong>العلامة</strong></td>
-                                        @foreach ($student->marks as $mark)
-                                            <td>{{$mark->mark}}</td>
-                                        @endforeach
-                                        <td>
-                                          <a  href="javascript:void()" data-target="#edit_marks"
-                                           data-toggle="modal" type="button" class="text-primary mr-1 ml-1" >
-                                           <i class="fa fa-edit mr-1"></i> تعديل </a>
-                                        </td>
-                                      </tr>
+
+                                        <tr>
+                                          <td class="bg-primary"><strong>العلامة</strong></td>
+                                          @foreach ($student->marks as $mark)
+                                              <td> {{$mark->matiere->total}} / <strong class="text-success">{{$mark->mark}} </strong> </td>
+                                          @endforeach
+                                          <td>
+                                            <a  href="javascript:void()" data-target="#edit_marks"
+                                             data-toggle="modal" type="button" class="text-primary mr-1 ml-1" >
+                                             <i class="fa fa-edit mr-1"></i> تعديل </a>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bg-info"><strong>المعامل</strong></td>
+                                          @foreach ($student->marks as $mark)
+                                              <td>{{$mark->matiere->cofficient}}</td>
+                                          @endforeach
+                                          <td></td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bg-warning"><strong>النتيجة</strong></td>
+                                          @foreach ($student->marks as $mark)
+                                              <td>
+                                                /
+                                              </td>
+                                          @endforeach
+                                          <td>
+                                             <strong class={{$student->marksAverage()['result'] > 10 ? 'text-success' : 'text-danger'}}>
+                                              {{$student->marksAverage()['result']}}</strong>
+                                          </td>
+
+                                        </tr>
+
+
                                       </tbody>
                                   </table>
                                 </div>
@@ -109,6 +131,26 @@
                               </div>
                 </div>
                 <!-- /.card-body -->
+              </div>
+              <div class="bg-white p-3 text-center">
+                <button type="button" class="btn btn-default" onclick="printtag('marks')"
+                ><i class="fa fa-print"></i> طباعة الكشف</button>
+                <button type="button" class="btn btn-info" onclick="printtagAndDisplay('present_certificate')"
+                ><i class="fa fa-print"></i> شهادة الحضور</button>
+                <button type="button" class="btn btn-success" onclick="printtagAndDisplay('success_certificate')"
+                ><i class="fa fa-print"></i> شهادة الاجتياز</button>
+              </div>
+              <div id="present_certificate" style="opacity: 0">
+                <h5 class="text-center">شهادة حضور</h5>
+                <h6>الى الطالب {{$student->name}}</h6>
+
+                 إن {{$settings->site_name}} تتمنى لك أسمى عبارات التقدير والنجاح في مشوارك وتشكرك على الحضور
+              </div>
+              <div id="success_certificate" style="opacity: 0">
+                <h5 class="text-center">شهادة اجتياز</h5>
+                <h6>الى الطالب {{$student->name}}</h6>
+
+                 إن {{$settings->site_name}} تتمنى لك أسمى عبارات التقدير والنجاح في مشوارك وتشكرك على اجتيازك له المرحلة بنجاح
               </div>
               <div class="modal fade" id="edit_marks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -213,7 +255,32 @@
       "autoWidth": false
     }); */
   });
+  function printtag(tagid) {
+  var hashid = "#"+ tagid;
+  var tagname =  $(hashid).prop("tagName").toLowerCase() ;
+  var attributes = "";
+  var attrs = document.getElementById(tagid).attributes;
+    $.each(attrs,function(i,elem){
+      attributes +=  " "+  elem.name+" ='"+elem.value+"' " ;
+    })
 
+
+  var divToPrint= $(hashid).html() ;
+  var head = "<html dir='rtl'><head>"+ $("head").html() + "</head>" ;
+  var allcontent = head + "<body  onload='window.print()' >"+ "<" + tagname + attributes + ">" +  divToPrint + "</" + tagname + ">" +  "</body></html>"  ;
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write(allcontent);
+  newWin.document.close();
+ // setTimeout(function(){newWin.close();},10);
+}
+function printtagAndDisplay(tag){
+  $('#'+tag).css('opacity',1)
+  printtag(tag);
+}
 </script>
 @endsection
 @endsection

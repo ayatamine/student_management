@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
-    <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>Profile settings - Bootdey.com</title>
+    <title>My Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
@@ -182,7 +180,7 @@ body{
                   <hr>
                   <div class="progress">
                     @php
-                        $absence_percentage = ($student->absence_number * 100) / $student->class->max_absence_number;
+                        $absence_percentage = ($student->absence_number * 100) / ($student->class ?  $student->class->max_absence_number : 1);
                         switch ($absence_percentage) {
                           case ( $absence_percentage > 70) :
                               $progress_color = 'bg-danger';
@@ -209,6 +207,7 @@ body{
                         <th scope="col">#</th>
                         <th scope="col">Module</th>
                         <th scope="col">Mark</th>
+                        <th scope="col">cofficient</th>
                         <th scope="col">Total</th>
                       </tr>
                     </thead>
@@ -220,21 +219,26 @@ body{
                       <tr>
                         <th scope="row">{{$key++}}</th>
                         <td>{{$m->matiere->name}}</td>
-                        <td>{{$m->mark}}</td>
-                        <td>{{$m->mark}}</td>
+                        <td><strong class="text-success">{{$m->mark}}</strong> / {{$m->matiere->total}}</td>
+                        <td>{{$m->matiere->cofficient}}</td>
+                        <td>{{$m->mark * $m->matiere->cofficient}}</td>
                       </tr>
+
                       @php
                           $sum+=$m->mark;
                       @endphp
                       @empty
                             <td colspan="4">no mark founded!</td>
                       @endforelse
-                      {{-- <tr>
+                      <tr>
                         <th scope="row">#</th>
-                        <td></td>
-                        <td></td>
-                        <td>{{$sum  / count($student->marks)}}</td>
-                      </tr> --}}
+                        <td colspan="2"></td>
+                        <td><strong>{{$student->marksAverage()['cofficient_sum']}}</strong></td>
+                        <td>
+                          <strong class={{$student->marksAverage()['result'] > 10 ? 'text-success' : 'text-danger'}}>
+                            {{$student->marksAverage()['result']}}</strong>
+                        </td>
+                      </tr>
                     </tbody>
                 </table>
               </div>

@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 use App\Notifications\StudentAccountUnlocked;
 use Illuminate\Http\Request;
 use App\Classes;
-use App\Setting;
 use App\User;
 use App\Marks;
 use Session;
 use Illuminate\Support\Facades\Hash;
-
+use App\Imports\StudentsImport;
+use Excel;
 class AdminSingleController extends Controller
 {
+    public function _construct(){
+      $this->middleware('auth:admin');
+      $this->middleware('role:supervisor');
+    }
     public function updateSiteSettings(Request $request){
         //dd($request);
         $this->validate($request,[
@@ -20,7 +24,7 @@ class AdminSingleController extends Controller
         $name = $request->name;
         $email = $request->email | '';
 
-        $settings = Setting::find(1);
+
 
         $logo=$request->logo;
         if($logo){
@@ -52,16 +56,42 @@ class AdminSingleController extends Controller
     Session::flash('success','تم تعديل الحساب بنجاح');
     return redirect()->back();
   }
-  public function students(){
-    $settings = Setting::find(1);
-    $normal_students = User::latest()->get();
-    return view('admin.students',compact('settings','normal_students'));
+  public function updateStudent($id,Request $request){
+    $request->validate([
+      'name'=>'required',
+      'email'=>'required',
+    ]);
+    $student = User::findorfail($id);
+    $student->name = $request->name;
+    $student->email = $request->email;
+    $student->class_id = $request->class_id;
+    $student->state = $request->state;
+    $student->save();
+    return response()->json([
+      'student'=>$student,
+      'class'=>$student->class,
+      'message'=>'تم تحديث حساب الطالب بنجاح'
+    ]);
+  }
+  public function deleteStudent($id){
+    $student = User::findorfail($id);
+    $student->delete();
+    return response()->json([
+      'student_id'=>$student->id,
+      'message'=>'تم حدف حساب الطالب بنجاح'
+    ]);
+  }
+  public function all_students(){
+
+    $classes = Classes::latest()->get();
+    $all_students = User::latest()->get();
+    return view('admin.all_students',compact('all_students','classes'));
   }
   public function new_students(){
-    $settings = Setting::find(1);
+
     $classes = Classes::latest()->get();
     $new_students = User::whereClassId(null)->latest()->get();
-    return view('admin.new_students',compact('settings','new_students','classes'));
+    return view('admin.new_students',compact('new_students','classes'));
   }
   ////activate student account
   public function activateAccount($student_id){
@@ -116,10 +146,10 @@ class AdminSingleController extends Controller
   }
   //get marks of a student by module
   public function Marks($student_id){
-    $settings = Setting::find(1);
+
     $student = User::with('class')->with('marks')->findorfail($student_id);
     //$matieres = $student->class->matieres;
-    return view('admin.classes.marks',compact('student','settings'));
+    return view('admin.classes.marks',compact('student'));
   }
   public function updateMarks($student_id,Request $request){
 
@@ -140,4 +170,9 @@ class AdminSingleController extends Controller
         return back();
 
   }
+  public function importStudents(Request $request){
+    (new StudentsImport)->import($request->file('file'), null, \Maatwebsite\Excel\Excel::CSV);
+    Session::flash('success','تم رفع الطلبة بنجاح');
+    return back();
+}
 }

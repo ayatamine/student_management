@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Imports\MatieresImport;
 use App\Matiere;
 use Session;
 use App\Marks;
+use Excel;
 class MatiereController extends Controller
 {
     /**
@@ -94,5 +96,10 @@ class MatiereController extends Controller
             $mark->delete();
           }
 
+    }
+    public function importMatieres(Request $request){
+        (new MatieresImport)->import($request->file('file'), null, \Maatwebsite\Excel\Excel::CSV);
+        Session::flash('success','تم رفع المواد بنجاح يمكنك ادراجها الان في القسم');
+        return back();
     }
 }

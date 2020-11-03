@@ -23,19 +23,45 @@
                 <ul class="nav nav-pills nav-sidebar ayat-nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                        with font-awesome or any other icon font library -->
-
+                  @admin('super')
                   <li class="nav-item">
                     <a href="{{route('admin.home')}}" class="nav-link ayat-nl @if(Request::segment(2) =='') active @endif">
                         <i class="nav-icon fa fa-dashboard"></i>
                       <p>إعدادات الموقع</p>
                     </a>
                   </li>
+                  <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fa fa-shopping-bag"></i>
+                      <p>
+                        إعدادات الصلاحيات
+                        <i class="fa fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="{{route('admin.roles')}}" class="nav-link ayat-nl @if(Request::segment(2) =='roles') active @endif">
+                          <i class="nav-icon fa fa-lock"></i>
+                          <p>الأدوار</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{route('admin.show')}}" class="nav-link ayat-nl @if(Request::segment(2) =='show') active @endif">
+                          <i class="nav-icon fa fa-user-circle-o"></i>
+                          <p>المجموعات</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  @endadmin
+
                   <li class="nav-item">
                     <a href="{{route('classes.index')}}" class="nav-link ayat-nl @if(Request::segment(2) =='classes') active @endif">
                         <i class="nav-icon fa fa-clone"></i>
                       <p>الأقسام</p>
                     </a>
                   </li>
+
                   <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                       <i class="nav-icon fa fa-users"></i>
@@ -45,12 +71,12 @@
                       </p>
                     </a>
                     <ul class="nav nav-treeview">
-                     {{--  <li class="nav-item">
-                        <a href="{{route('admin.new_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='students') active @endif">
+                      <li class="nav-item">
+                        <a href="{{route('admin.all_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='students') active @endif">
                           <i class="nav-icon fa fa-user-circle"></i>
-                          <p>الطلبة العاديين</p>
+                          <p>كل الطلبة</p>
                         </a>
-                      </li> --}}
+                      </li>
                       <li class="nav-item">
                         <a href="{{route('admin.new_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='new_students') active @endif">
                           <i class="nav-icon fa fa-user-plus"></i>

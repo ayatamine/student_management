@@ -29,7 +29,7 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-                <span class="">{{auth('admin')->user()->name}}</span>
+                <span class="">{{auth('admin')->check() ? auth('admin')->user()->name : ''}}</span>
                 <i class="fa fa-sort-desc" style="position:relative;top:-3px" aria-hidden="true"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
@@ -118,11 +118,11 @@
                     <div class="card-body pb-0">
                         <div class="form-group">
                         <label for="name">الاسم</label>
-                        <input type="text"  name="name"  class="form-control" id="name" value="{{auth('admin')->user()->name}}">
+                        <input type="text"  name="name"  class="form-control" id="name" value="{{auth('admin')->check() ? auth('admin')->user()->name : ''}}">
                         </div>
                         <div class="form-group">
                         <label for="file_number">البريد الالكتروني</label>
-                        <input type="email"  name="email"  class="form-control" id="email" value="{{auth('admin')->user()->email}}">
+                        <input type="email"  name="email"  class="form-control" id="email" value="{{auth('admin')->check() ? auth('admin')->user()->email : ''}}">
                         </div>
                         <div class="form-group">
                         <label for="password">كلمة السر الجديدة</label>

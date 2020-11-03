@@ -1,16 +1,19 @@
-@extends('multiauth::layouts.app') 
+{{-- @extends('multiauth::layouts.app')  --}}
+@extends('admin.layouts.app')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ ucfirst(config('multiauth.prefix')) }} List
-                    <span class="pull-right">
-                        <a href="{{route('admin.register')}}" class="btn btn-sm btn-success">New {{ ucfirst(config('multiauth.prefix')) }}</a>
+<div class="content p-md-4">
+    <div class="container-fluid ">
+        <div class="col-md-10 col-md-offset-2">
+            <div class="card panel-default">
+                <div class="card-header bg-info text-white">
+                    المجموعات
+                    <span class="pull-left">
+                        <a href="{{route('admin.register')}}" class="btn btn-sm btn-success">أدمن جديد {{-- {{ ucfirst(config('multiauth.prefix')) }} --}}</a>
                     </span>
                 </div>
+
                 <div class="panel-body">
+
     @include('multiauth::message')
                     <ul class="list-group">
                         @foreach ($admins as $admin)
@@ -23,12 +26,13 @@
                                         </span> @endforeach
                             </span>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-sm btn-default mr-3" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $admin->id }}').submit();">Delete</a>
                                 <form id="delete-form-{{ $admin->id }}" action="{{ route('admin.delete',[$admin->id]) }}" method="POST" style="display: none;">
                                     @csrf @method('delete')
                                 </form>
 
-                                <a href="{{route('admin.edit',[$admin->id])}}" class="btn btn-sm btn-primary mr-3">Edit</a>
+                                <a href="{{route('admin.edit',[$admin->id])}}" class="btn btn-sm btn-primary mr-3">تعديل</a>
+                                <a href="#" class="btn btn-sm btn-danger mr-3" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $admin->id }}').submit();">حدف</a>
+
                             </div>
                         </li>
                         @endforeach @if($admins->count()==0)
