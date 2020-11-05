@@ -81,11 +81,14 @@
                     @csrf
                      <label for="file"
                     class="btn btn-info float-right mr-1 ml-1" >
-                    <i class="fa fa-upload " style="position:relative;top:3px"></i> رفع CSV
+                    <i class="fa fa-upload " ></i> رفع CSV
                     </label>
                     <input type="file" name="file" id="file" class="d-none" onchange="importMatieres()">
                     <input type="hidden" name="class_id"  class="form-control" value="{{$class_details->id}}">
                   </form>
+                  <a href="{{route('class_marks.export',['class_id'=>$class_details->id])}}"
+                    class="btn btn-warning"
+                    ><i class="fa fa-download ml-1"></i>تنزيل الكشف </a>
 
             </h3>
           </div>
