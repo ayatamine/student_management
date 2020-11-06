@@ -280,6 +280,7 @@
 function printtagAndDisplay(tag){
   $('#'+tag).css('opacity',1)
   printtag(tag);
+  $('#'+tag).css('opacity',0)
 }
 </script>
 @endsection

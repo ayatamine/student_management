@@ -201,7 +201,7 @@ body{
               <div class="tab-pane" id="security">
                 <h6>List of Marks by Modules</h6>
                 <hr>
-                <table class="table table-striped">
+                <table class="table table-striped" id="marks">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -241,6 +241,26 @@ body{
                       </tr>
                     </tbody>
                 </table>
+                <div class="bg-white p-3 text-center">
+                  <button type="button" class="btn btn-warning" onclick="printtag('marks')"
+                  ><i class="fa fa-print"></i> طباعة الكشف</button>
+                  <button type="button" class="btn btn-info" onclick="printtagAndDisplay('present_certificate')"
+                  ><i class="fa fa-print"></i> شهادة الحضور</button>
+                  <button type="button" class="btn btn-success" onclick="printtagAndDisplay('success_certificate')"
+                  ><i class="fa fa-print"></i> شهادة الاجتياز</button>
+                </div>
+                <div id="present_certificate" class="text-right" style="opacity: 0">
+                  <h5 class="text-center">شهادة حضور</h5>
+                  <h6>الى الطالب {{$student->name}}</h6>
+
+                   إن {{$settings->site_name}} تتمنى لك أسمى عبارات التقدير والنجاح في مشوارك وتشكرك على الحضور
+                </div>
+                <div id="success_certificate"  class="text-right" style="opacity: 0">
+                  <h5 class="text-center">شهادة اجتياز</h5>
+                  <h6>الى الطالب {{$student->name}}</h6>
+
+                   إن {{$settings->site_name}} تتمنى لك أسمى عبارات التقدير والنجاح في مشوارك وتشكرك على اجتيازك له المرحلة بنجاح
+                </div>
               </div>
             </div>
           </div>
@@ -251,7 +271,33 @@ body{
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+function printtag(tagid) {
+  var hashid = "#"+ tagid;
+  var tagname =  $(hashid).prop("tagName").toLowerCase() ;
+  var attributes = "";
+  var attrs = document.getElementById(tagid).attributes;
+    $.each(attrs,function(i,elem){
+      attributes +=  " "+  elem.name+" ='"+elem.value+"' " ;
+    })
 
+
+  var divToPrint= $(hashid).html() ;
+  var head = "<html dir='rtl'><head>"+ $("head").html() + "</head>" ;
+  var allcontent = head + "<body  onload='window.print()' >"+ "<" + tagname + attributes + ">" +  divToPrint + "</" + tagname + ">" +  "</body></html>"  ;
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write(allcontent);
+  newWin.document.close();
+ // setTimeout(function(){newWin.close();},10);
+}
+function printtagAndDisplay(tag){
+  $('#'+tag).css('opacity',1)
+  printtag(tag);
+  $('#'+tag).css('opacity',0)
+}
 
 </script>
 </body>
