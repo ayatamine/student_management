@@ -9,6 +9,7 @@ use App\Marks;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use App\Imports\StudentsImport;
+use App\Imports\ClassMarks as ClassMarksImport;
 use App\Exports\ClassMarks;
 use Excel;
 class AdminSingleController extends Controller
@@ -181,6 +182,14 @@ class AdminSingleController extends Controller
     return (new ClassMarks($class))->download('class_marks.csv', \Maatwebsite\Excel\Excel::CSV,[
       'Content-Type' => 'text/csv',
     ]);
+
+  }
+  public function importClassMarks(Request $request){
+    //dd($request->all());
+    $class = Classes::findorfail($request->class_id);
+    (new ClassMarksImport($class))->import($request->file('file'), null, \Maatwebsite\Excel\Excel::CSV);
+    Session::flash('success','تم رفع النقاط بنجاح');
+    return back();
 
   }
 }

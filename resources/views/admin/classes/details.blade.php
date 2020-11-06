@@ -87,8 +87,18 @@
                     <input type="hidden" name="class_id"  class="form-control" value="{{$class_details->id}}">
                   </form>
                   <a href="{{route('class_marks.export',['class_id'=>$class_details->id])}}"
-                    class="btn btn-warning"
+                    class="btn btn-warning float-right"
                     ><i class="fa fa-download ml-1"></i>تنزيل الكشف </a>
+                    <form action="{{route('class_marks.upload')}}" method="post"
+                   enctype="multipart/form-data" id="import_marks" >
+                    @csrf
+                     <label for="file2"
+                    class="btn bg-success float-right mr-1 ml-1" >
+                    <i class="fa fa-upload " ></i> رفع الكشف
+                    </label>
+                    <input type="file" name="file" id="file2" class="d-none" onchange="importMarks()">
+                    <input type="hidden" name="class_id"  class="form-control" value="{{$class_details->id}}">
+                  </form>
 
             </h3>
           </div>
@@ -458,6 +468,9 @@
  */
  function importMatieres(){
   document.getElementById('import_matieres').submit();
+ }
+ function importMarks(){
+  document.getElementById('import_marks').submit();
  }
 </script>
 @endsection

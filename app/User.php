@@ -46,6 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Marks::class,'student_id');
     }
     public function marksAverage(){
+        if(!$this->class){
+            return array('cofficient_sum'=>0,'result'=>0) ;
+
+        }
       $tot =0;$cofficient_sum = 0;
        foreach ($this->marks as $mark) {
            $cofficient_sum += $mark->matiere->cofficient;
@@ -53,6 +57,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
        }
        return array('cofficient_sum'=>$cofficient_sum,'result'=>round($tot / $cofficient_sum,2)) ;
+    }
+    public function absencePercentage(){
+        if(!$this->class){return 0;}
+        return
+        ($this->absence_number * 100) / ($this->class->max_absence_number > 0 ?
+         $this->class->max_absence_number : 1);
     }
 
 }

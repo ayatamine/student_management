@@ -180,7 +180,7 @@ body{
                   <hr>
                   <div class="progress">
                     @php
-                        $absence_percentage = ($student->absence_number * 100) / ($student->class ?  $student->class->max_absence_number : 1);
+                        $absence_percentage = $student->absencePercentage();
                         switch ($absence_percentage) {
                           case ( $absence_percentage > 70) :
                               $progress_color = 'bg-danger';

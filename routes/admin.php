@@ -65,6 +65,7 @@ Route::group([
   Route::post('/importMatieres','MatiereController@importMatieres')->name( 'matieres.upload');
   Route::post('/importStudents','AdminSingleController@importStudents')->name( 'students.upload');
   Route::get('/ExportClassMarks/{class_id}','AdminSingleController@exportclassMarks')->name( 'class_marks.export');
+  Route::post('/importClassMarks','AdminSingleController@importclassMarks')->name( 'class_marks.upload');
 
   //matieres
   Route::resource('/matieres','MatiereController');
