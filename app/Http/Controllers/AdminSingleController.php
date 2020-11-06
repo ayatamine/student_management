@@ -179,7 +179,7 @@ class AdminSingleController extends Controller
   }
   public function exportClassMarks($class_id){
     $class = Classes::with('students')->with('matieres')->findorfail($class_id);
-    return (new ClassMarks($class))->download('class_marks.csv', \Maatwebsite\Excel\Excel::CSV,[
+    return (new ClassMarks($class))->download($class->name.'.csv', \Maatwebsite\Excel\Excel::CSV,[
       'Content-Type' => 'text/csv',
     ]);
 
