@@ -56,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
            $tot += $mark->matiere->cofficient * $mark->mark;
 
        }
+       $cofficient_sum = $cofficient_sum > 0 ? $cofficient_sum : 1;      
        return array('cofficient_sum'=>$cofficient_sum,'result'=>round($tot / $cofficient_sum,2)) ;
     }
     public function absencePercentage(){
