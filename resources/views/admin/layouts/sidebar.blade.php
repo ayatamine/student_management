@@ -61,36 +61,13 @@
                       <p>الأقسام</p>
                     </a>
                   </li>
-
-                  <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon fa fa-users"></i>
-                      <p>
-                        إدارة الطلبة
-                        <i class="fa fa-angle-left right"></i>
-                      </p>
+                  <li class="nav-item">
+                    <a href="{{route('admin.all_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='all_students') active @endif">
+                        <i class="nav-icon fa fa-users"></i>
+                      <p>إدارة الطلبة</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="{{route('admin.all_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='students') active @endif">
-                          <i class="nav-icon fa fa-user-circle"></i>
-                          <p>كل الطلبة</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="{{route('admin.new_students')}}" class="nav-link ayat-nl @if(Request::segment(2) =='new_students') active @endif">
-                          <i class="nav-icon fa fa-user-plus"></i>
-                          <p>الطلبة الجدد</p>
-                        </a>
-                      </li>
-                    </ul>
                   </li>
-                  {{-- <li class="nav-item">
-                      <a href="{{route('admin.Supervisor')}}" class="nav-link ayat-nl @if(Request::segment(2) =='Supervisor') active @endif">
-                          <i class="fa fa-server" aria-hidden="true"></i>
-                        <p>إدارة المشرفين</p>
-                      </a>
-                  </li> --}}
+
 
                 </ul>
               </nav>

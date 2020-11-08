@@ -27,7 +27,7 @@ class StudentsImport implements ToModel,WithHeadingRow
             'password' => Hash::make($row['password']),
             's_id' =>Str::random(5),
             'state'=>1,
-            'email_verified_at'=>Carbon::now()
+            'email_verified_at'=>date('y-m-d')
         ]);
     }
 }

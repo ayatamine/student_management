@@ -1,6 +1,6 @@
 
 @extends('admin.layouts.app')
-@section('title','إعدادات الطبة  ')
+@section('title','إعدادات الطلبة  ')
 @section('style')
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -426,7 +426,7 @@
       dataType:'json',
       success:function(data){
         //console.log(data);
-        $('#edit_student_modal').modal('hide');
+        $('#delete_student').modal('hide');
         $('.json_alert').removeClass('d-none');
         $('.json_alert span').text(data.message);
         $('#stdrow-'+data.student_id+'').remove();
