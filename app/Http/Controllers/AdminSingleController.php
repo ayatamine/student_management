@@ -143,6 +143,9 @@ class AdminSingleController extends Controller
     $student = User::findorfail($request->student_id);
     $student->absence_number = $request->absence_number;
     $student->save();
+    if($student->absencePercentage >= 70){
+       $student->notify(new AbsenceLimit($student));
+    }
     Session::flash('success','تم تسجيل الغياب بنجاح');
     return back();
   }
