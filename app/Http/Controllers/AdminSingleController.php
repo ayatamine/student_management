@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Notifications\StudentAccountUnlocked;
+use App\Notifications\AbsenceLimit;
 use Illuminate\Http\Request;
 use App\Classes;
 use App\User;
