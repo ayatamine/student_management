@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class StudentsImport implements ToModel,WithHeadingRow
+class StudentsImport implements ToModel,WithHeadingRow,WithCustomCsvSettings
 {
     use Importable;
     /**
@@ -29,5 +30,11 @@ class StudentsImport implements ToModel,WithHeadingRow
             'state'=>1,
             'email_verified_at'=>date('y-m-d')
         ]);
+    }
+    public function getCsvSettings(): array
+    {
+        return [
+            'delimiter' => ';'
+        ];
     }
 }

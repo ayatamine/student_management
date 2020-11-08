@@ -5,9 +5,10 @@ namespace App\Imports;
 use App\Matiere;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\Importable;
 
-class MatieresImport implements ToModel,WithHeadingRow
+class MatieresImport implements ToModel,WithHeadingRow,WithCustomCsvSettings
 {
     use Importable;
     /**
@@ -22,5 +23,11 @@ class MatieresImport implements ToModel,WithHeadingRow
             'cofficient'    => $row['cofficient'],
             'total' => $row['total'],
         ]);
+    }
+    public function getCsvSettings(): array
+    {
+        return [
+            'delimiter' => ';'
+        ];
     }
 }
