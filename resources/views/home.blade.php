@@ -165,13 +165,17 @@ body{
                 <div class="p-3">
                   <div class="">
                     <div class="row">
-                      <div class="form-group col-sm-6 col-md-6">
+                      <div class="form-group col-sm-6 col-md-4">
                         <label for="classes" class="content-label">Studing days number</label>
                         <h6 class="content-value">{{$student->class ? $student->class->studing_day_number : 'not presented yet'}}</h6>
                       </div>
-                      <div class="form-group col-sm-6 col-md-6">
+                      <div class="form-group col-sm-6 col-md-4">
                         <label for="classes" class="content-label">Maximum absence number</label>
                         <h6 class="content-value">{{$student->class ? $student->class->max_absence_number : 0}}</h6>
+                      </div>
+                      <div class="form-group col-sm-6 col-md-4">
+                        <label for="classes" class="content-label">Your Absence</label>
+                        <h6 class="content-value">{{$student ? $student->absence_number : 0}}</h6>
                       </div>
                     </div>
                   </div>
